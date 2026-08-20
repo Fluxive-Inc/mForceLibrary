@@ -1,0 +1,29 @@
+2026-02-25 08:22:37,311 DEBUG    root            Loaded Command Group: ['gcloud', 'config']
+2026-02-25 08:22:37,323 DEBUG    root            Loaded Command Group: ['gcloud', 'config', 'list']
+2026-02-25 08:22:37,324 DEBUG    root            Running [gcloud.config.list] with arguments: [--project: "mforcelibrary"]
+2026-02-25 08:22:37,337 DEBUG    root            Failed to check metadata server: <urlopen error [Errno 8] nodename nor servname provided, or not known>
+2026-02-25 08:22:37,337 DEBUG    root            On GCE from server: False
+2026-02-25 08:22:37,340 DEBUG    root            On GCE from memory cache: False
+2026-02-25 08:22:37,340 INFO     root            Unable to get environment tag for project [mforcelibrary]: You do not currently have an active account selected.
+Please run:
+
+  $ gcloud auth login
+
+to obtain new credentials.
+
+If you have already logged in with a different account, run:
+
+  $ gcloud config set account ACCOUNT
+
+to select an already authenticated account to use.
+2026-02-25 08:22:37,340 INFO     ___FILE_ONLY___ Project 'mforcelibrary' lacks an 'environment' tag. Please create or add a tag with key 'environment' and a value like 'Production', 'Development', 'Test', or 'Staging'. Add an 'environment' tag using `gcloud resource-manager tags bindings create`. See https://cloud.google.com/resource-manager/docs/creating-managing-projects#designate_project_environments_with_tags for details.
+
+2026-02-25 08:22:37,341 DEBUG    root            Chosen display Format:config
+2026-02-25 08:22:37,341 INFO     root            Display format: "config"
+2026-02-25 08:22:37,365 INFO     ___FILE_ONLY___ [core]
+disable_usage_reporting = True
+project = mforcelibrary
+
+2026-02-25 08:22:37,365 INFO     ___FILE_ONLY___ 
+Your active configuration is: [default]
+

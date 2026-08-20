@@ -1,0 +1,73 @@
+/* [Protocol] FluxOS_refresh-protocol.md
+   Styling for System Update Notification Toast */
+
+.fx-toast {
+    position: fixed;
+    top: 20px;
+    right: -400px;
+    /* Hidden off-screen */
+    width: 300px;
+    background: rgba(10, 20, 40, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 243, 255, 0.3);
+    /* Neon Cyan */
+    border-left: 4px solid #00f3ff;
+    border-radius: 8px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    z-index: 10000;
+    transition: right 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    cursor: pointer;
+    font-family: 'Orbitron', sans-serif;
+    color: white;
+}
+
+.fx-toast.visible {
+    right: 20px;
+}
+
+.fx-toast:hover {
+    background: rgba(10, 20, 40, 0.95);
+    border-color: #00D4FF;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
+}
+
+.fx-toast-icon {
+    color: #00D4FF;
+    display: flex;
+    align-items: center;
+}
+
+.fx-toast-content {
+    flex: 1;
+}
+
+.fx-toast-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: #fff;
+    text-shadow: 0 0 5px rgba(0, 243, 255, 0.5);
+}
+
+.fx-toast-desc {
+    font-size: 10px;
+    color: rgba(255, 255, 255, 0.6);
+    font-family: 'Inter', sans-serif;
+    margin-top: 4px;
+}
+
+.fx-toast-action {
+    color: rgba(255, 255, 255, 0.5);
+    display: flex;
+    align-items: center;
+    transition: color 0.3s;
+}
+
+.fx-toast-action:hover {
+    color: #fff;
+}

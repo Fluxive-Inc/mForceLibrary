@@ -1,0 +1,35 @@
+2026-02-25 07:56:25,453 DEBUG    root            Loaded Command Group: ['gcloud', 'auth']
+2026-02-25 07:56:25,455 DEBUG    root            Loaded Command Group: ['gcloud', 'auth', 'list']
+2026-02-25 07:56:25,455 DEBUG    root            Running [gcloud.auth.list] with arguments: []
+2026-02-25 07:56:25,458 DEBUG    root            Failed to read GCE cache file: [Errno 2] No such file or directory: '/Users/sean/Fluxive Inc/800 Efflux/mForceLibrary/.gcloud-config/gce'
+2026-02-25 07:56:25,464 DEBUG    root            Failed to check metadata server: <urlopen error [Errno 8] nodename nor servname provided, or not known>
+2026-02-25 07:56:25,464 DEBUG    root            On GCE from server: False
+2026-02-25 07:56:25,464 DEBUG    root            Chosen display Format:    table[title='Credentialed Accounts'](
+        status.yesno(yes='*', no=''):label=ACTIVE,
+        account
+    )
+2026-02-25 07:56:25,465 INFO     root            Display format: "    table[title='Credentialed Accounts'](
+        status.yesno(yes='*', no=''):label=ACTIVE,
+        account
+    )"
+2026-02-25 07:56:25,465 INFO     ___FILE_ONLY___ 
+No credentialed accounts.
+
+To login, run:
+  $ gcloud auth login `ACCOUNT`
+
+
+2026-02-25 07:56:25,487 DEBUG    root            Checking for updates...
+2026-02-25 07:56:25,488 DEBUG    root            On GCE from memory cache: False
+2026-02-25 07:56:25,489 DEBUG    root            On GCE from memory cache: False
+2026-02-25 07:56:25,494 DEBUG    urllib3.connectionpool Starting new HTTPS connection (1): dl.google.com:443
+2026-02-25 07:56:25,837 DEBUG    urllib3.connectionpool https://dl.google.com:443 "GET /dl/cloudsdk/channels/rapid/components-2.json HTTP/1.1" 200 25049
+2026-02-25 07:56:25,877 DEBUG    root            Updating notification cache...
+2026-02-25 07:56:25,877 DEBUG    root            Activating notification: [default]
+2026-02-25 07:56:25,877 INFO     ___FILE_ONLY___ 
+
+Updates are available for some Google Cloud CLI components.  To install them,
+please run:
+  $ gcloud components update
+
+

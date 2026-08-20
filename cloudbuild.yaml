@@ -1,0 +1,38 @@
+steps:
+  # Build the Docker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'us-east1-docker.pkg.dev/$PROJECT_ID/fx-library/mforcelibrary', '.']
+
+  # Push the Docker image to Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'us-east1-docker.pkg.dev/$PROJECT_ID/fx-library/mforcelibrary']
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: gcloud
+    args:
+      - 'run'
+      - 'deploy'
+      - 'mforcelibrary'
+      - '--image'
+      - 'us-east1-docker.pkg.dev/$PROJECT_ID/fx-library/mforcelibrary'
+      - '--region'
+      - 'us-east1'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+      - '--network'
+      - 'projects/fluxive-machineforce/global/networks/mforce-unified-vpc'
+      - '--subnet'
+      - 'projects/fluxive-machineforce/regions/us-east1/subnetworks/mforce-east-central'
+      - '--vpc-egress'
+      - 'private-ranges-only'
+      - '--quiet'
+      - '--project'
+      - '$PROJECT_ID'
+
+images:
+  - 'us-east1-docker.pkg.dev/$PROJECT_ID/fx-library/mforcelibrary'
+
+options:
+  logging: CLOUD_LOGGING_ONLY

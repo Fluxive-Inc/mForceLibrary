@@ -1,0 +1,428 @@
+.library-viewport {
+    height: 100vh;
+    width: 100vw;
+    background: #02040a;
+    overflow: hidden;
+    perspective: 800px;
+    /* Restoring depth but softly */
+    perspective-origin: 50% 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+
+    .radial-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(circle at 50% 50%, transparent 60%, rgba(2, 5, 12, 0.6) 100%);
+        pointer-events: none;
+        z-index: 100;
+        // Removed heavy black inset border/bezel effect so the scene hits the edge of the monitor
+        box-shadow: inset 0 -50px 150px rgba(0, 0, 0, 0.8); // Just a soft bottom shadow for the desk contrast
+    }
+}
+
+.hallway-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    transform-style: preserve-3d;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // Pushing translateZ forward moves the physical lens DEEP into the scene, 
+    // wrapping the shelves past the user's peripheral vision.
+    transform: translateY(100px) translateZ(400px);
+}
+
+.data-hallway {
+    position: absolute;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+    animation: warpDrive 120s linear infinite;
+
+    &.delayed {
+        animation-delay: -60s;
+    }
+
+    &.warp-fast {
+        animation-duration: 30s;
+        filter: blur(2px);
+    }
+
+    &.warp-fast.delayed {
+        animation-delay: -15s;
+    }
+
+    .ceiling,
+    .floor {
+        position: absolute;
+        width: 8000px;
+        height: 6000px;
+        left: -4000px; // center it (width / 2)
+        top: -3000px; // center it (height / 2)
+        transform-style: preserve-3d;
+    }
+
+    .ceiling {
+        background: linear-gradient(0deg, transparent, rgba(0, 200, 255, 0.25) 100%);
+        box-shadow: 0 0 500px rgba(0, 150, 255, 0.3) inset;
+        border-left: 2px solid rgba(0, 255, 255, 0.1);
+        border-right: 2px solid rgba(0, 255, 255, 0.1);
+        transform: translateY(-500px) rotateX(90deg);
+
+        // Distant digital horizon sun/aurora
+        &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            height: 1500px;
+            background: radial-gradient(ellipse at 50% 0%, rgba(0, 243, 255, 0.5), transparent 70%);
+            mix-blend-mode: screen;
+        }
+    }
+
+    .floor {
+        background: rgba(2, 5, 12, 0.95);
+        border-left: 3px solid rgba(0, 243, 255, 0.6);
+        border-right: 3px solid rgba(0, 243, 255, 0.6);
+        transform: translateY(500px) rotateX(-90deg);
+
+        // Add the dense grid to the floor
+        background-image:
+            linear-gradient(rgba(0, 243, 255, 0.25) 2px, transparent 2px),
+            linear-gradient(90deg, rgba(0, 243, 255, 0.25) 2px, transparent 2px);
+        background-size: 200px 200px;
+        box-shadow: inset 0 0 300px rgba(0, 200, 255, 0.2);
+
+        // Center glowing walkway line
+        &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 24px;
+            margin-left: -12px;
+            background: #fff;
+            box-shadow: 0 0 60px 20px rgba(0, 243, 255, 0.8), 0 0 120px rgba(0, 100, 255, 0.6);
+            opacity: 0.95;
+        }
+
+        // Pathway wide glow reflection
+        &::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 600px;
+            margin-left: -300px;
+            background: linear-gradient(90deg, transparent, rgba(0, 243, 255, 0.15), transparent);
+        }
+    }
+}
+
+.shelf {
+    position: absolute;
+    width: 6000px;
+    height: 1000px; // Restored original height
+    left: -3000px;
+    top: -500px; // Restored original Y position to match ceiling/floor
+    background: rgba(5, 12, 25, 0.4);
+    box-shadow: inset 0 0 50px rgba(0, 102, 255, 0.1);
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    padding: 100px; // Restored original padding
+    gap: 40px; // Restored original gap
+    transform-style: preserve-3d;
+
+    &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: linear-gradient(0deg, transparent 95%, rgba(0, 255, 255, 0.2) 100%);
+        background-size: 100% 300px;
+        pointer-events: none;
+    }
+
+    &.left {
+        transform: translateX(-2000px) rotateY(90deg); // Kept pushed out, but scaled for FOV
+    }
+
+    &.right {
+        transform: translateX(2000px) rotateY(-90deg);
+        flex-direction: row-reverse; // Flip the tomes so they go correctly down the hall
+    }
+
+    .tome-container {
+        transform-style: preserve-3d;
+        // Angle the books towards the center of the room slightly!
+        transform: rotateY(-30deg) translateZ(30px);
+        transition: transform 0.3s;
+
+        &:hover {
+            transform: rotateY(-10deg) translateZ(80px);
+        }
+
+        &.reverse {
+            transform: rotateY(30deg) translateZ(30px);
+
+            &:hover {
+                transform: rotateY(10deg) translateZ(80px);
+            }
+        }
+    }
+
+    .card-catalog {
+        width: 300px;
+        height: 240px;
+        background: rgba(2, 5, 12, 0.95);
+        border: 2px solid #00f3ff;
+        box-shadow: inset 0 0 30px rgba(0, 243, 255, 0.2), 0 0 15px rgba(0, 243, 255, 0.4);
+        margin: 20px; // Spacing on shelves
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transform-style: preserve-3d;
+        border-radius: 4px;
+        position: relative;
+
+        &::before {
+            content: 'CATALOG NODE';
+            position: absolute;
+            top: 10px;
+            left: 20px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            color: #fff;
+            opacity: 0.6;
+            letter-spacing: 2px;
+        }
+
+        .catalog-drawer {
+            width: 85%;
+            height: 80px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-bottom: 2px solid rgba(0, 243, 255, 0.8);
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Share Tech Mono', monospace;
+            color: #00f3ff;
+            font-size: 1.1rem;
+            font-weight: bold;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.9) inset;
+            transform-style: preserve-3d;
+            transform: translateZ(10px); // pops drawer out slightly
+
+            .drawer-handle {
+                position: absolute;
+                bottom: -25px;
+                width: 80px;
+                height: 10px;
+                background: linear-gradient(0deg, #111, #555);
+                border: 1px solid rgba(255, 255, 255, 0.2);
+                border-radius: 4px;
+                box-shadow: 0 5px 10px rgba(0, 0, 0, 0.8);
+            }
+        }
+    }
+}
+
+@keyframes warpDrive {
+    0% {
+        transform: translateZ(-6000px);
+    }
+
+    100% {
+        transform: translateZ(800px);
+    }
+}
+
+.curator-hud {
+    position: absolute;
+    z-index: 200;
+    width: 80%;
+    max-width: 1000px;
+    height: 70vh;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 243, 255, 0.3);
+    border-radius: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 40px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease;
+
+    &.active {
+        opacity: 1;
+        pointer-events: auto;
+        box-shadow: 0 0 100px rgba(0, 102, 255, 0.2);
+    }
+
+    .cyber-title {
+        width: 100%;
+        color: #fff;
+        font-family: 'Orbitron', sans-serif;
+        text-shadow: 0 0 10px #00f3ff;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .hud-hint {
+        color: rgba(255, 255, 255, 0.5);
+        font-family: 'Share Tech Mono', monospace;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
+    .btn-search,
+    .btn-close {
+        background: rgba(0, 102, 255, 0.3);
+        border: 1px solid #00f3ff;
+        color: #fff;
+        padding: 8px 16px;
+        font-family: 'Orbitron', sans-serif;
+        cursor: pointer;
+        border-radius: 4px;
+        margin-top: auto;
+
+        &:hover {
+            background: rgba(0, 243, 255, 0.4);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.8);
+        }
+    }
+
+    .btn-close {
+        position: absolute;
+        bottom: 20px;
+        right: 20px;
+    }
+}
+
+.researcher-desk {
+    position: absolute;
+    bottom: 0; // Lock to bottom of viewport
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1000px;
+    height: 350px;
+    perspective: 800px;
+    z-index: 200; // Above everything including radial overlay
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    pointer-events: none; // Let UI float up, only monitor is clickable
+
+    .desk-surface {
+        position: absolute;
+        bottom: -50px;
+        width: 100%;
+        height: 300px; // Restored grounded height
+        background: linear-gradient(180deg, rgba(2, 5, 12, 0.95), rgba(0, 0, 0, 1));
+        border-top: 2px solid rgba(0, 243, 255, 0.5); // Softer edge
+        box-shadow: 0 -20px 100px rgba(0, 243, 255, 0.15);
+        transform: rotateX(70deg);
+        transform-origin: bottom center;
+        border-radius: 30px 30px 0 0;
+        pointer-events: auto;
+
+        // Holographic keyboard/interface projection
+        &::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: 50px;
+            width: 500px;
+            height: 100px;
+            margin-left: -250px;
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            border-radius: 12px;
+            background: linear-gradient(0deg, rgba(0, 243, 255, 0.05), transparent);
+            box-shadow: inset 0 0 20px rgba(0, 243, 255, 0.1);
+        }
+    }
+
+    .desk-monitor {
+        position: relative;
+        z-index: 2;
+        pointer-events: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        margin-bottom: 250px; // Push the Launchpad dock further out vertically
+        transform: translateZ(-200px); // Push it deeper into the physical space
+        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s ease;
+
+        &.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(60px) scale(0.9) rotateX(-10deg);
+        }
+
+        h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: #fff;
+            text-shadow: 0 0 15px #00f3ff;
+            margin: 0 0 15px 0;
+            font-size: 1.8rem;
+            letter-spacing: 1px;
+        }
+
+        p {
+            font-family: 'Outfit', sans-serif;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 35px;
+        }
+
+        .btn-dive-in {
+            background: rgba(0, 243, 255, 0.1);
+            border: 1px solid #00f3ff;
+            color: #00f3ff;
+            padding: 14px 30px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+
+            &:hover {
+                background: rgba(0, 243, 255, 0.25);
+                box-shadow: 0 0 30px rgba(0, 243, 255, 0.6);
+                color: #fff;
+                transform: translateY(-2px);
+            }
+
+            &:active {
+                transform: translateY(1px);
+            }
+        }
+    }
+}

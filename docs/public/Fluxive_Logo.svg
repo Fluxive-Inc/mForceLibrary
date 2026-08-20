@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" class="w-14 h-14">
+  <defs>
+    <style>
+      .fluxive-primary { color: #3B82F6; }
+    </style>
+  </defs>
+  
+  <!-- Right Triangle Fill -->
+  <path d="M12 6 L17 17 L12 14 Z" fill="#3B82F6" stroke="none"/>
+  
+  <!-- Main Outline (Triangle & Parentheses) -->
+  <path d="M12 6l-5 11 5-3 5 3z M3 5c-2.5 3.5-2.5 10.5 0 14 M21 5c2.5 3.5 2.5 10.5 0 14" 
+        stroke="#3B82F6" 
+        stroke-width="2" 
+        stroke-linecap="round" 
+        stroke-linejoin="round"
+        fill="none"/>
+</svg>

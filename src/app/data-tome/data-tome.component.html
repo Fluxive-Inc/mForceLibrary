@@ -1,0 +1,12 @@
+<div class="data-tome" (click)="onSelect($event)">
+    <div class="tome-header">{{ item.category | uppercase }}</div>
+    <div class="tome-title">{{ item.title }}</div>
+    <div class="tome-content">
+        <!-- Body preview or context points -->
+        <p *ngIf="item.description">{{ item.description | slice:0:50 }}...</p>
+    </div>
+    <div class="tome-metadata">
+        <span>{{ item.author || 'Fluxive' }}</span>
+        <span>{{ item.id }}</span>
+    </div>
+</div>

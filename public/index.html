@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library | Fluxive Inc.</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+  <!-- AUTHORITATIVE FONTS -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Outfit:wght@300;400;600;800&family=Exo+2:wght@300;400;500;600;700&family=Orbitron:wght@400;700;800&family=Inter:wght@400&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/refresh-toast.css">
+
+  <style>
+    :root {
+      /* The Dynamic Accent Variable for Library: Neon Orange */
+      --accent-hex: #ff9900;
+      --accent-rgb: 255, 153, 0;
+
+      /* Standard Colors */
+      --text-main: #ffffff;
+      --text-muted: rgba(180, 190, 210, 0.9);
+      --bg-deep: #020205;
+      --secondary-neon: #ff9900;
+    }
+
+    body {
+      margin: 0;
+      background-color: var(--bg-deep);
+      color: var(--text-main);
+      font-family: 'Outfit', sans-serif;
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+    }
+
+    /* --- LAYER 0: ATMOSPHERE --- */
+    .ambient-glow {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(var(--accent-rgb), 0.15), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(var(--accent-rgb), 0.08), transparent 40%);
+      z-index: 1;
+    }
+
+    .laser-lines {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: repeating-linear-gradient(90deg, transparent, transparent 100px, rgba(var(--accent-rgb), 0.1) 100px, rgba(var(--accent-rgb), 0.1) 102px);
+      z-index: 2;
+      pointer-events: none;
+      animation: laserScan 4s infinite linear alternate;
+    }
+
+    @keyframes laserScan {
+      0% { transform: translateX(-50px); }
+      100% { transform: translateX(50px); }
+    }
+
+    /* --- FIXED ELEMENTS --- */
+    .site-header {
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px; box-sizing: border-box; z-index: 1000;
+      backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(0, 0, 0, 0.8);
+      transition: opacity 0.8s ease;
+    }
+
+    .logo-block { display: flex; align-items: center; gap: 15px; }
+    .brand-text { font-family: 'Orbitron', sans-serif; font-weight: 700; letter-spacing: 0.2em; font-size: 12px; color: #fff; }
+    .brand-slogan { font-weight: 400; opacity: 0.6; margin-left: 8px; border-left: 1px solid rgba(255, 255, 255, 0.2); padding-left: 15px; font-family: 'Share Tech Mono', monospace; }
+
+    .nav-actions { display: flex; gap: 40px; align-items: center; }
+
+    .ticker-bar {
+      position: fixed; bottom: 0; left: 0; width: 100%; height: 30px; background-color: #000;
+      display: flex; justify-content: space-between; align-items: center; padding: 0 40px; box-sizing: border-box;
+      font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: rgba(255, 255, 255, 0.6); z-index: 1100;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      transition: opacity 0.8s ease;
+    }
+
+    /* --- LAYER 2: LOCAL CONTENT --- */
+    .layer-2-content {
+      position: absolute; top: 220px; left: 50%; transform: translateX(-50%); width: 100%; max-width: 1400px;
+      display: flex; justify-content: space-around; align-items: flex-start; z-index: 10; transition: opacity 0.8s ease;
+    }
+
+    .marketing-col { width: 450px; }
+    .marketing-col h2 { font-family: 'Outfit', sans-serif; margin: 0; line-height: 1.1; letter-spacing: -1px; }
+    .marketing-col h2 .top-line { display: block; font-size: 1.15rem; font-weight: 800; color: var(--text-main); text-shadow: 0 0 10px rgba(var(--accent-rgb), 0.5); }
+    .marketing-col h2 .bottom-line { display: block; font-size: 3.2rem; font-weight: 800; color: var(--accent-hex); text-shadow: 0 0 20px rgba(var(--accent-rgb), 0.5); }
+    .marketing-col p { font-family: 'Exo 2', sans-serif; font-size: 1.05rem; opacity: 0.8; line-height: 1.6; color: var(--text-main); margin-top: 20px; margin-bottom: 30px; }
+    
+    .tags-container { display: flex; gap: 10px; flex-wrap: wrap; }
+    .decorator-tag { font-family: 'Share Tech Mono', monospace; font-size: 11px; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; border: 1px solid var(--accent-hex); background: rgba(var(--accent-rgb), 0.1); color: var(--accent-hex); letter-spacing: 1px; }
+
+    .product-col { width: 450px; }
+    .glass-panel { position: relative; padding: 50px 40px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(var(--accent-rgb), 0.05) 100%); box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(var(--accent-rgb), 0.2); border-radius: 20px; border-top: 4px solid var(--accent-hex); }
+    
+    .product-header-block { display: flex; align-items: center; gap: 20px; margin-bottom: 30px; }
+    .product-icon-container { width: 56px; height: 56px; position: relative; border-radius: 14px; background: rgba(var(--accent-rgb), 0.15); border: 1px solid rgba(var(--accent-rgb), 0.4); display: flex; justify-content: center; align-items: center; }
+    
+    .product-title-block h1 { font-family: 'Orbitron', sans-serif; font-size: 1.6rem; font-weight: 700; margin: 0; line-height: 1; color: var(--accent-hex); text-shadow: 0 0 10px rgba(var(--accent-rgb), 0.5); letter-spacing: 2px; }
+    .product-title-block .subtitle { font-family: 'Share Tech Mono', monospace; font-size: 11px; color: var(--text-muted); letter-spacing: 1px; margin-top: 6px; display: block; }
+    
+    .code-block { background: rgba(0, 0, 0, 0.4); border-radius: 8px; padding: 15px; border: 1px solid rgba(255, 255, 255, 0.05); position: relative; font-family: 'Share Tech Mono', monospace; font-size: 12px; color: rgba(255, 255, 255, 0.8); margin-bottom: 20px; line-height: 1.5; }
+
+    /* VISION MARK */
+    .vision-mark-container { position: absolute; top: 12px; right: 15px; pointer-events: none; z-index: 100; }
+    .vision-mark-text { font-family: 'Orbitron', sans-serif; font-weight: 800; letter-spacing: 0.1em; font-size: 14px; background: linear-gradient(180deg, #051A45 0%, var(--accent-hex) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5); filter: drop-shadow(0 0 10px rgba(var(--accent-rgb), 0.3)); }
+    .vision-mark-sup { background: linear-gradient(90deg, var(--accent-hex), #ffcc80); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-size: 0.6em; margin-left: 2px; }
+
+    /* SOLAR TOGGLE */
+    .solar-toggle-fab { position: relative; width: clamp(48px, 6vw, 62px); height: clamp(54px, 7vw, 68px); background: transparent; border: none; cursor: pointer; outline: none; transition: opacity 0.8s ease; }
+    .solar-toggle-fab svg { position: absolute; width: 150%; height: 150%; top: -25%; left: -25%; transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.5s ease; filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.5)); }
+    .solar-toggle-fab:hover svg { transform: scale(1.15) rotate(2deg) translateY(-5px); filter: drop-shadow(0 0 15px rgba(var(--accent-rgb), 0.6)); }
+    .solar-toggle-fab .sun-icon { opacity: 0; transform: translateY(20px) scale(0.5); }
+    .solar-toggle-fab .moon-icon { opacity: 1; transform: translateY(0px) scale(1); }
+    
+    body.solar-mode { background-color: #f8fafc; color: #0f172a; }
+    body.solar-mode .marketing-col h2 .top-line, body.solar-mode .marketing-col p { color: #0f172a; }
+    body.solar-mode .solar-toggle-fab .sun-icon { opacity: 1; transform: translateY(0px) scale(1); }
+    body.solar-mode .solar-toggle-fab .moon-icon { opacity: 0; transform: translateY(20px) scale(0.5); }
+  </style>
+</head>
+
+<body>
+  <!-- IMMUTABLE HEADER -->
+  <header class="site-header" id="perimeter-header">
+    <div class="logo-block">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M12 6l-5 11 5-3 5 3z M3 5c-2.5 3.5-2.5 10.5 0 14 M21 5c2.5 3.5 2.5 10.5 0 14" stroke="#ff9900" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      </svg>
+      <span class="brand-text">FLUXIVE <span class="brand-slogan">INTELLIGENT BEYOND ARTIFICIAL</span></span>
+    </div>
+
+    <div class="nav-actions">
+      <div class="solar-toggle-fab" title="Celestial Sync">
+        <div style="position: relative; width: 28px; height: 28px; filter: drop-shadow(0 0 8px rgba(0, 85, 255, 0.6));">
+            <!-- Premium Sun -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="solar-icon-sun sun-icon" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);">
+                <defs>
+                    <radialGradient id="premium-sun-glow" cx="50%" cy="50%" r="50%">
+                        <stop offset="0%" stop-color="#ffffff"></stop>
+                        <stop offset="30%" stop-color="#fff4cc"></stop>
+                        <stop offset="60%" stop-color="#ffb703"></stop>
+                        <stop offset="100%" stop-color="#ea580c" stop-opacity="0"></stop>
+                    </radialGradient>
+                    <radialGradient id="premium-sun-core" cx="50%" cy="50%" r="50%">
+                        <stop offset="50%" stop-color="#ffffff"></stop>
+                        <stop offset="85%" stop-color="#fde047"></stop>
+                        <stop offset="100%" stop-color="#eab308"></stop>
+                    </radialGradient>
+                    <filter id="sun-shadow">
+                        <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#f59e0b" flood-opacity="0.6"></feDropShadow>
+                    </filter>
+                </defs>
+                <circle cx="50" cy="50" r="45" fill="url(#premium-sun-glow)"></circle>
+                <path d="M50 15 L53 28 L65 20 L60 33 L75 35 L66 45 L80 50 L66 55 L75 65 L60 67 L65 80 L53 72 L50 85 L47 72 L35 80 L40 67 L25 65 L34 55 L20 50 L34 45 L25 35 L40 33 L35 20 L47 28 Z" fill="#fbbf24" opacity="0.6" filter="url(#sun-shadow)"></path>
+                <circle cx="50" cy="50" r="18" fill="url(#premium-sun-core)" filter="url(#sun-shadow)"></circle>
+            </svg>
+            <!-- Premium Moon -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="solar-icon-moon moon-icon" style="position: absolute; top: 0px; left: 0px; width: 100%; height: 100%; transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);">
+                <defs>
+                    <radialGradient id="premium-moon-base" cx="30%" cy="30%" r="70%">
+                        <stop offset="0%" stop-color="#f8fafc"></stop>
+                        <stop offset="50%" stop-color="#94a3b8"></stop>
+                        <stop offset="100%" stop-color="#1e293b"></stop>
+                    </radialGradient>
+                    <filter id="premium-moon-shadow">
+                        <feDropShadow dx="-2" dy="2" stdDeviation="3" flood-color="#ffffff" flood-opacity="0.3"></feDropShadow>
+                    </filter>
+                </defs>
+                <path d="M65 18 A30 30 0 1 0 75 75 A35 35 0 1 1 65 18 Z" fill="url(#premium-moon-base)" filter="url(#premium-moon-shadow)"></path>
+            </svg>
+        </div>
+    </div>
+    </div>
+  </header>
+
+  <!-- LAYER 0 -->
+  <div class="ambient-glow" id="perimeter-ambient"></div>
+  <div class="laser-lines" id="perimeter-waves"></div>
+
+  <!-- LAYER 2 -->
+  <div class="layer-2-content" id="perimeter-stage">
+    <div class="marketing-col">
+      <h2>
+        <span class="top-line">DATA ARCHIVE</span>
+        <span class="bottom-line">INTELLIGENCE</span>
+      </h2>
+      <p>
+        mForce Library provides a centralized, read-only documentation cache governing all MachineForce protocol procedures and standards.
+      </p>
+      <div class="tags-container">
+        <span class="decorator-tag">ARCHIVAL</span>
+        <span class="decorator-tag">READ-ONLY</span>
+        <span class="decorator-tag">SECURE</span>
+      </div>
+    </div>
+
+    <div class="product-col">
+      <div class="glass-panel">
+        <div class="vision-mark-container">
+          <span class="vision-mark-text">Fluxive<sup class="vision-mark-sup">OS</sup></span>
+        </div>
+
+        <div class="product-header-block">
+          <div class="product-icon-container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--secondary-neon)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="filter: drop-shadow(0 0 10px var(--secondary-neon));">
+                <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/>
+            </svg>
+          </div>
+          <div class="product-title-block">
+            <h1>LIBRARY</h1>
+            <span class="subtitle">ARCHIVE ACCESSIBLE</span>
+          </div>
+        </div>
+
+        <div class="code-block">
+          > INITIALIZING INDEX...<br>
+          > SCANNING VOLUMES...<br>
+          > AWAITING AUTHENTICATION.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="ticker-bar" id="perimeter-footer">
+    <div class="build-version">v1.0.0</div>
+    <div class="copyright">&copy; 2026 Fluxive Inc</div>
+  </footer>
+
+  <!-- REFRESH GUARD PROTOCOL -->
+  <div id="fx-refresh-toast" class="fx-toast" onclick="location.reload(true)">
+      <div class="fx-toast-content">
+          <div class="fx-toast-title">SYSTEM UPDATED</div>
+          <div class="fx-toast-desc">Tap to Refresh</div>
+      </div>
+  </div>
+  <script src="js/refresh-guard.js" defer></script>
+
+  <!-- LAUNCHPAD ENCLAVE BOOTLOADER -->
+  <script>window.FLUXIVE_BRIDGE_API = window.location.origin;</script>
+  <script src="https://machineforce.fluxive.ai/launch.js" async></script>
+
+  <!-- TRUE AIR GAP GATEKEEPER SCRIPT -->
+  <script>
+    (function() {
+        const landingLayer = document.querySelector('.layer-2-content'); 
+        const APP_PAYLOAD_URL = '/app.html';
+        
+        window.addEventListener('mforce-auth-changed', (e) => {
+            const user = e.detail && (e.detail.user || e.detail);
+            
+            if (user) {
+                // Fade out landing
+                if(landingLayer) {
+                    landingLayer.style.opacity = '0';
+                    setTimeout(() => landingLayer.style.display = 'none', 800);
+                }
+                
+                // Spawn iframe
+                if (!document.getElementById('mforce-hypervisor-viewport')) {
+                    const iframe = document.createElement('iframe');
+                    iframe.id = 'mforce-hypervisor-viewport';
+                    iframe.src = APP_PAYLOAD_URL;
+                    iframe.style.position = 'fixed';
+                    iframe.style.top = '0'; iframe.style.left = '0';
+                    iframe.style.width = '100vw'; iframe.style.height = '100vh';
+                    iframe.style.border = 'none'; iframe.style.zIndex = '5';
+                    document.body.appendChild(iframe);
+                }
+                
+                // Cleanup visuals
+                const am = document.getElementById('perimeter-ambient');
+                const wav = document.getElementById('perimeter-waves');
+                const head = document.getElementById('perimeter-header');
+                const foot = document.getElementById('perimeter-footer');
+                if(am) am.style.display = 'none';
+                if(wav) wav.style.display = 'none';
+                if(head) { head.style.opacity = '0'; setTimeout(() => head.style.display='none', 800); }
+                if(foot) { foot.style.opacity = '0'; setTimeout(() => foot.style.display='none', 800); }
+                
+            } else {
+                // Destroy iframe and return to landing
+                const iframe = document.getElementById('mforce-hypervisor-viewport');
+                if (iframe) iframe.remove();
+                if(landingLayer) {
+                    landingLayer.style.display = 'flex';
+                    setTimeout(() => landingLayer.style.opacity = '1', 50);
+                }
+                const am = document.getElementById('perimeter-ambient');
+                const wav = document.getElementById('perimeter-waves');
+                const head = document.getElementById('perimeter-header');
+                const foot = document.getElementById('perimeter-footer');
+                if(am) am.style.display = 'block';
+                if(wav) wav.style.display = 'block';
+                if(head) { head.style.display = 'flex'; setTimeout(() => head.style.opacity='1', 50); }
+                if(foot) { foot.style.display = 'flex'; setTimeout(() => foot.style.opacity='1', 50); }
+            }
+        });
+    })();
+  </script>
+
+  <!-- THEME TOGGLE (Solar/Lunar) -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const toggleBtn = document.getElementById('fluxive-solar-toggle');
+      if (!toggleBtn) return;
+      if (localStorage.getItem('fluxive-theme') === 'solar') { document.body.classList.add('solar-mode'); }
+      toggleBtn.addEventListener('click', () => {
+        const isSolar = document.body.classList.contains('solar-mode');
+        document.body.classList.toggle('solar-mode');
+        localStorage.setItem('fluxive-theme', isSolar ? 'lunar' : 'solar');
+      });
+    });
+  </script>
+
+  <!-- AUTH PROXY (Phase 3) -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/machineforce-proxy.js', { scope: '/' })
+        .then(reg => console.log('[FluxiveProxy] Active.'))
+        .catch(err => console.warn('[FluxiveProxy] Failed:', err));
+    }
+  </script>
+
+</body>
+</html>

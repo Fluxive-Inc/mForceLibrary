@@ -1,0 +1,52 @@
+{
+    "contextBoxes": [
+        {
+            "label": "Core",
+            "tag": "Core",
+            "icon": "C",
+            "path": "/core/guide/getting-started",
+            "descHeader": ">> KERNEL.DOCS",
+            "descContent": "Architecture & protocols."
+        },
+        {
+            "label": "Reference",
+            "tag": "Reference",
+            "icon": "Ref",
+            "path": "/reference/platform/overview",
+            "descHeader": ">> API.INDEX",
+            "descContent": "Glossaries & cheat sheets."
+        },
+        {
+            "label": "Templates",
+            "tag": "Templates",
+            "icon": "T",
+            "path": "/templates/mforce-edges/overview",
+            "descHeader": ">> SCAFFOLD.SYS",
+            "descContent": "Boilerplate code."
+        },
+        {
+            "label": "Research",
+            "tag": "Research",
+            "icon": "R",
+            "path": "/research/influence-design/index",
+            "descHeader": ">> R&D.LOGS",
+            "descContent": "Experimental frameworks."
+        },
+        {
+            "label": "Academy",
+            "tag": "Academy",
+            "icon": "A",
+            "path": "/academy/overview",
+            "descHeader": ">> TRAINING.MODULES",
+            "descContent": "Educational resources & tutorials."
+        },
+        {
+            "label": "News",
+            "tag": "News",
+            "icon": "N",
+            "path": "/news",
+            "descHeader": ">> INTEL.FEED",
+            "descContent": "Latest system updates."
+        }
+    ]
+}

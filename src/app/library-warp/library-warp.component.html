@@ -1,0 +1,90 @@
+<div class="library-viewport" [class.searching]="searching">
+        <div class="radial-overlay"></div>
+
+        <div class="hallway-container" #hallway>
+                <div class="data-hallway" [class.warp-fast]="searching">
+                        <!-- Floor and Ceiling -->
+                        <div class="ceiling"></div>
+                        <div class="floor"></div>
+
+                        <div class="shelf left">
+                                <ng-container *ngFor="let item of shelfBatchA">
+                                        <div class="tome-container">
+                                                <div *ngIf="item.isCatalog" class="card-catalog">
+                                                        <div class="catalog-drawer">
+                                                                <span>{{ item.title }}</span>
+                                                                <div class="drawer-handle"></div>
+                                                        </div>
+                                                </div>
+                                                <app-data-tome *ngIf="!item.isCatalog" [item]="item"
+                                                        (selectItem)="onSelect($event)"></app-data-tome>
+                                        </div>
+                                </ng-container>
+                        </div>
+                        <div class="shelf right">
+                                <ng-container *ngFor="let item of shelfBatchA">
+                                        <div class="tome-container reverse">
+                                                <div *ngIf="item.isCatalog" class="card-catalog">
+                                                        <div class="catalog-drawer">
+                                                                <span>{{ item.title }}</span>
+                                                                <div class="drawer-handle"></div>
+                                                        </div>
+                                                </div>
+                                                <app-data-tome *ngIf="!item.isCatalog" [item]="item"
+                                                        (selectItem)="onSelect($event)"></app-data-tome>
+                                        </div>
+                                </ng-container>
+                        </div>
+                </div>
+
+                <div class="data-hallway delayed" [class.warp-fast]="searching">
+                        <!-- Floor and Ceiling -->
+                        <div class="ceiling"></div>
+                        <div class="floor"></div>
+
+                        <div class="shelf left">
+                                <ng-container *ngFor="let item of shelfBatchB">
+                                        <div class="tome-container">
+                                                <div *ngIf="item.isCatalog" class="card-catalog">
+                                                        <div class="catalog-drawer">
+                                                                <span>{{ item.title }}</span>
+                                                                <div class="drawer-handle"></div>
+                                                        </div>
+                                                </div>
+                                                <app-data-tome *ngIf="!item.isCatalog" [item]="item"
+                                                        (selectItem)="onSelect($event)"></app-data-tome>
+                                        </div>
+                                </ng-container>
+                        </div>
+                        <div class="shelf right">
+                                <ng-container *ngFor="let item of shelfBatchB">
+                                        <div class="tome-container reverse">
+                                                <div *ngIf="item.isCatalog" class="card-catalog">
+                                                        <div class="catalog-drawer">
+                                                                <span>{{ item.title }}</span>
+                                                                <div class="drawer-handle"></div>
+                                                        </div>
+                                                </div>
+                                                <app-data-tome *ngIf="!item.isCatalog" [item]="item"
+                                                        (selectItem)="onSelect($event)"></app-data-tome>
+                                        </div>
+                                </ng-container>
+                        </div>
+                </div>
+        </div>
+
+        <!-- The Workspace HUD -->
+        <div class="curator-hud" #hudContainer [class.active]="isCurating">
+                <h2 *ngIf="isCurating" class="cyber-title">Active Research</h2>
+                <button *ngIf="isCurating" (click)="isCurating = false; hudContainer.innerHTML = ''"
+                        class="btn-close">CLEAR WORKSPACE</button>
+        </div>
+
+        <!-- Front Desk / Researcher Station -->
+        <div class="researcher-desk" [class.hidden]="isCurating">
+                <div class="desk-surface"></div>
+                <div class="desk-monitor" [class.hidden]="searching || isCurating">
+                        <fluxive-launchpad home-url="/"></fluxive-launchpad>
+                </div>
+        </div>
+</div>

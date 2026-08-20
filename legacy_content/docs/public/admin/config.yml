@@ -1,0 +1,54 @@
+backend:
+  name: github
+  repo: fluxive/fxAgent_mForceDocs
+  branch: main
+  base_url: https://fxagent-oauth-xsrdjrvkxq-ue.a.run.app
+
+media_folder: "docs/public/images"
+public_folder: "/images"
+
+collections:
+  - name: "guide"
+    label: "Guide"
+    folder: "docs/guide"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "studio"
+    label: "Studio"
+    folder: "docs/studio"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "persistence"
+    label: "Persistence"
+    folder: "docs/persistence"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "mforce-edges"
+    label: "mForce Edges"
+    folder: "docs/mforce-edges"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}
+
+  - name: "design-standards"
+    label: "Design Standards"
+    folder: "docs/standards"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Body", name: "body", widget: "markdown"}

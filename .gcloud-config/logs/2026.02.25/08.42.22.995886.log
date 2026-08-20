@@ -1,0 +1,97 @@
+2026-02-25 08:42:23,112 DEBUG    root            Loaded Command Group: ['gcloud', 'builds']
+2026-02-25 08:42:23,178 DEBUG    root            Loaded Command Group: ['gcloud', 'builds', 'submit']
+2026-02-25 08:42:23,201 DEBUG    root            Failed to check metadata server: <urlopen error [Errno 8] nodename nor servname provided, or not known>
+2026-02-25 08:42:23,201 DEBUG    root            On GCE from server: False
+2026-02-25 08:42:23,206 DEBUG    root            Running [gcloud.builds.submit] with arguments: [--config: "cloudbuild.yaml", --project: "mforcelibrary", SOURCE: "."]
+2026-02-25 08:42:23,218 DEBUG    root            On GCE from memory cache: False
+2026-02-25 08:42:23,219 DEBUG    root            (gcloud.builds.submit) You do not currently have an active account selected.
+Please run:
+
+  $ gcloud auth login
+
+to obtain new credentials.
+
+If you have already logged in with a different account, run:
+
+  $ gcloud config set account ACCOUNT
+
+to select an already authenticated account to use.
+Traceback (most recent call last):
+  File "/Users/sean/google-cloud-sdk/lib/googlecloudsdk/calliope/cli.py", line 944, in Execute
+    resources = calliope_command.Run(cli=self, args=args)
+  File "/Users/sean/google-cloud-sdk/lib/googlecloudsdk/calliope/backend.py", line 960, in Run
+    resources = command_instance.Run(args)
+  File "/Users/sean/google-cloud-sdk/lib/surface/builds/submit.py", line 254, in Run
+    build_config = submit_util.SetSource(
+        build_config,
+    ...<12 lines>...
+        args.default_buckets_behavior,
+    )
+  File "/Users/sean/google-cloud-sdk/lib/googlecloudsdk/command_lib/builds/submit_util.py", line 357, in SetSource
+    gcs_client = storage_api.StorageClient()
+  File "/Users/sean/google-cloud-sdk/lib/googlecloudsdk/api_lib/storage/storage_api.py", line 91, in __init__
+    self.client = client or storage_util.GetClient()
+                            ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "/Users/sean/google-cloud-sdk/lib/googlecloudsdk/api_lib/storage/storage_util.py", line 295, in GetClient
+    return core_apis.GetClientInstance('storage', 'v1')
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "/Users/sean/google-cloud-sdk/lib/googlecloudsdk/api_lib/util/apis.py", line 282, in GetClientInstance
+    return apis_internal._GetClientInstance(
+           ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^
+        api_name,
+        ^^^^^^^^^
+    ...<5 lines>...
+        region=regional.LocationToRegion(location) if location else None,
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "/Users/sean/google-cloud-sdk/lib/googlecloudsdk/api_lib/util/apis_internal.py", line 178, in _GetClientInstance
+    http_client = transports.GetApitoolsTransport(
+        response_encoding=transport.ENCODING,
+        timeout=http_timeout_sec if http_timeout_sec else 'unset')
+  File "/Users/sean/google-cloud-sdk/lib/googlecloudsdk/core/credentials/transports.py", line 73, in GetApitoolsTransport
+    session = requests.GetSession(
+        timeout=timeout,
+    ...<4 lines>...
+        redact_request_body_reason=redact_request_body_reason,
+    )
+  File "/Users/sean/google-cloud-sdk/lib/googlecloudsdk/core/credentials/requests.py", line 84, in GetSession
+    credentials = store.LoadIfEnabled(
+        allow_account_impersonation
+    )
+  File "/Users/sean/google-cloud-sdk/lib/googlecloudsdk/core/credentials/store.py", line 604, in LoadIfEnabled
+    return Load(
+        allow_account_impersonation=allow_account_impersonation)
+  File "/Users/sean/google-cloud-sdk/lib/googlecloudsdk/core/credentials/store.py", line 828, in Load
+    cred = _Load(
+        account,
+    ...<2 lines>...
+        cache_only_rapt=cache_only_rapt,
+    )
+  File "/Users/sean/google-cloud-sdk/lib/googlecloudsdk/core/credentials/store.py", line 964, in _Load
+    raise creds_exceptions.NoActiveAccountException(
+        named_configs.ActiveConfig(False).file_path)
+googlecloudsdk.core.credentials.exceptions.NoActiveAccountException: You do not currently have an active account selected.
+Please run:
+
+  $ gcloud auth login
+
+to obtain new credentials.
+
+If you have already logged in with a different account, run:
+
+  $ gcloud config set account ACCOUNT
+
+to select an already authenticated account to use.
+2026-02-25 08:42:23,230 ERROR    root            (gcloud.builds.submit) You do not currently have an active account selected.
+Please run:
+
+  $ gcloud auth login
+
+to obtain new credentials.
+
+If you have already logged in with a different account, run:
+
+  $ gcloud config set account ACCOUNT
+
+to select an already authenticated account to use.

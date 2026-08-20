@@ -1,0 +1,15 @@
+[
+    { "title": "Getting Started", "path": "/core/guide/getting-started", "category": "core", "snippet": "Guide: Initialize your first Neural Curator environment.", "tags": ["guide", "start", "setup", "install"] },
+    { "title": "Architecture", "path": "/core/guide/architecture", "category": "core", "snippet": "Understanding the Fluxive ecosystem nodes.", "tags": ["structure", "system", "nodes"] },
+    { "title": "Influence Architecture", "path": "/academy/influence/overview", "category": "academy", "snippet": "The underlying philosophy of Machineforce.", "tags": ["theory", "concept", "academy"] },
+    { "title": "Influence Design", "path": "/research/influence-design/index", "category": "research", "snippet": "Core philosophy of human-machine alignment.", "tags": ["research", "influence", "philosophy"] },
+    { "title": "Strategic Frameworks", "path": "/research/influence-design/frameworks", "category": "research", "snippet": "Holy Trinity and Fluxive Leadership models.", "tags": ["research", "strategy", "framework"] },
+    { "title": "Reference: AI Archetypes", "path": "/research/influence-design/archetypes", "category": "research", "snippet": "The 4 AI Archetypes (Strategist, Oracle, Storyteller, Agent).", "tags": ["research", "archetypes", "ai"] },
+    { "title": "Command & Control", "path": "/reference/platform/command-control", "category": "reference", "snippet": "CLI commands and terminal interfaces.", "tags": ["terminal", "cli", "console"] },
+    { "title": "API Reference", "path": "/reference/platform/api-reference", "category": "reference", "snippet": "Endpoints for the Cortex API.", "tags": ["http", "rest", "endpoints"] },
+    { "title": "Edge Modules", "path": "/templates/mforce-edges/overview", "category": "templates", "snippet": "Deploying edge compute nodes.", "tags": ["edge", "iot", "deploy"] },
+    { "title": "Trackback App", "path": "/templates/mforce-edges/modules/trackback-app", "category": "templates", "snippet": "Reference implementation for data tracking.", "tags": ["demo", "example", "app"] },
+    { "title": "Fluxive.ai Official", "path": "https://fluxive.ai", "category": "web", "snippet": "Official website of Fluxive Machineforce.", "tags": ["web", "official", "site"], "isExternal": true },
+    { "title": "MDN Web Docs", "path": "https://developer.mozilla.org", "category": "web", "snippet": "Resources for developers, by developers.", "tags": ["web", "javascript", "css"], "isExternal": true },
+    { "title": "VitePress Guide", "path": "https://vitepress.dev", "category": "web", "snippet": "Vite & Vue powered static site generator.", "tags": ["web", "vite", "vue"], "isExternal": true }
+]

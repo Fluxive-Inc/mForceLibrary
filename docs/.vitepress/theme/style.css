@@ -1,0 +1,734 @@
+/* --- Base Reset (Vanilla replacement for tailwind base) --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body,
+h1,
+h2,
+h3,
+h4,
+p,
+figure,
+blockquote,
+dl,
+dd {
+  margin: 0;
+}
+
+ul[role='list'],
+ol[role='list'] {
+  list-style: none;
+}
+
+html:focus-within {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* --- Layout Refactor: Library Structure (Header + Box) --- */
+
+/* 1. Main Grid Container */
+.VPLayout {
+  display: grid !important;
+  grid-template-areas:
+    "header header"
+    "sidebar content";
+  grid-template-columns: var(--vp-sidebar-width) 1fr;
+  grid-template-rows: var(--vp-nav-height) 1fr;
+  min-height: 100vh;
+}
+
+/* 2. Header Area (Top Shelf) */
+.VPNav {
+  grid-area: header;
+  position: sticky !important;
+  /* Keep it sticky but in grid flow */
+  top: 0;
+  z-index: 50;
+  width: 100% !important;
+}
+
+/* 3. Sidebar Area (Left Stack) */
+.VPSidebar {
+  grid-area: sidebar;
+  position: fixed !important;
+  /* VitePress relies on fixed for scrolling independently */
+  top: var(--vp-nav-height) !important;
+  /* Start below header */
+  height: calc(100vh - var(--vp-nav-height)) !important;
+  padding-top: 0 !important;
+  /* Remove internal padding offset */
+  z-index: 40;
+}
+
+/* 4. Content Area (Digital Page) */
+.VPContent {
+  grid-area: content;
+  padding-top: 0 !important;
+  /* Remove default padding for fixed header overlap */
+  margin-top: 20px;
+  /* Space inside the "Box" */
+}
+
+/* Mobile/Responsive Adjustments */
+@media (max-width: 960px) {
+  .VPLayout {
+    grid-template-areas:
+      "header header"
+      "content content";
+    grid-template-columns: 1fr;
+  }
+
+  .VPSidebar {
+    display: none;
+    /* Let VitePress handle mobile menu drawer */
+  }
+}
+
+:root {
+  /* --- FLUXIVE EXCHANGE THEME (Space Theme) --- */
+
+  /* Palette - Deep Void (Deep Blue Base) */
+  --vp-c-bg: #050A14;
+  /* Deep Blue Void */
+  --vp-c-bg-alt: #020408;
+  /* Darker Abyss */
+  --vp-c-bg-elv: #0A1020;
+  /* Elevated Deep Blue Surface */
+
+  /* Accents */
+  --vp-c-brand-1: #224FB1;
+  /* Neon Blue (RGB 34/79/177) */
+  --vp-c-brand-2: #00F3FF;
+  /* Cyan (Secondary) */
+  --vp-c-brand-3: #FFFFFF;
+  /* Star White (Tertiary) */
+
+  /* Neural Curator Palette */
+  --fx-void: #050A14;
+  --fx-teal: #00F3FF;
+  --fx-violet: #8A63D2;
+  --fx-amber: #FFB020;
+  --fx-glass: rgba(34, 79, 177, 0.05);
+
+  /* Text */
+  --vp-c-text-1: #FFFFFF;
+  /* Star White */
+  --vp-c-text-2: #94A3B8;
+  /* Stardust Grey */
+  --vp-c-text-3: #475569;
+  /* Deep Space Grey */
+
+  /* Typography */
+  --vp-font-family-base: 'Inter', 'Roboto', system-ui, sans-serif;
+  --vp-font-family-mono: 'JetBrains Mono', 'Fira Code', monospace;
+  --vp-font-family-headings: 'Exo 2', sans-serif;
+
+  /* Dimensions */
+  --vp-sidebar-width: 240px;
+  /* Standardized */
+  --vp-nav-height: 64px;
+
+  /* Glass Variables (Day) */
+  --vp-sidebar-bg-color: rgba(5, 10, 20, 0.85);
+  --vp-nav-bg-color: rgba(5, 10, 20, 0.8);
+  --vp-backdrop-bg-color: rgba(0, 0, 0, 0.5);
+
+  /* Borders */
+  --vp-border-color: rgba(34, 79, 177, 0.2);
+}
+
+/* --- NITE STYLE (Dark Mode Override) --- */
+.dark {
+  --vp-c-bg: #050A14;
+  --vp-c-bg-alt: #020408;
+  --vp-c-bg-elv: #0A1020;
+
+  --vp-c-brand-1: #224FB1;
+  /* Neon Blue (RGB 34/79/177) */
+  --vp-c-brand-2: #00F3FF;
+  /* Cyan (Secondary) */
+
+  --vp-c-text-1: #FFFFFF;
+  --vp-c-text-2: #94A3B8;
+  --vp-c-text-3: #475569;
+
+  /* Glass Variables (Nite) */
+  --vp-sidebar-bg-color: rgba(5, 10, 20, 0.9);
+  --vp-nav-bg-color: rgba(2, 5, 10, 0.8);
+  --vp-backdrop-bg-color: rgba(0, 0, 0, 0.6);
+
+  /* Borders (Nite) */
+  --vp-border-color: rgba(34, 79, 177, 0.3);
+}
+
+/* --- SOLAR STYLE (Mandatory) --- */
+body.solar-mode {
+  --vp-c-bg: #f8fafc;
+  /* Crisp, clean off-white */
+  --vp-c-bg-alt: #f1f5f9;
+  --vp-c-bg-elv: #ffffff;
+
+  --vp-c-text-1: #0f172a;
+  /* Deep contrast dark slate */
+  --vp-c-text-2: #475569;
+  --vp-c-text-3: #64748b;
+
+  --vp-c-brand-1: #2563eb;
+  /* Slightly darker blue to stand out on light bg */
+  --vp-border-color: rgba(0, 0, 0, 0.1);
+
+  --vp-sidebar-bg-color: rgba(255, 255, 255, 0.9);
+  --vp-nav-bg-color: rgba(255, 255, 255, 0.8);
+}
+
+/* Eclipse Radial Transition Rules */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+html.transition-to-solar::view-transition-old(root) {
+  z-index: 1;
+}
+
+html.transition-to-solar::view-transition-new(root) {
+  z-index: 9999;
+}
+
+html.transition-to-lunar::view-transition-old(root) {
+  z-index: 9999;
+}
+
+html.transition-to-lunar::view-transition-new(root) {
+  z-index: 1;
+}
+
+/* --- Shared / Component Overrides --- */
+
+/* Sidebar Panel: "Terminal Tree" */
+.VPSidebar {
+  border-right: 1px solid var(--vp-border-color) !important;
+  background-color: var(--vp-sidebar-bg-color) !important;
+  padding: 24px 0 !important;
+  font-family: var(--vp-font-family-mono) !important;
+  /* Force Mono */
+  /* Remove old box shadow */
+  box-shadow: 5px 0 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Sidebar Groups */
+.VPSidebarGroup {
+  margin-bottom: 24px !important;
+}
+
+.VPSidebarGroup .title-text {
+  font-family: var(--vp-font-family-headings) !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 13px !important;
+  color: var(--vp-c-text-3) !important;
+  /* Muted label */
+}
+
+/* Sidebar Items (Links) */
+.VPSidebarItem .link {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-size: 13px !important;
+  padding: 6px 16px !important;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border-left: 2px solid transparent;
+  color: var(--vp-c-text-2) !important;
+}
+
+.VPSidebarItem .link:hover {
+  color: var(--vp-c-text-1) !important;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Active State: Neon Blue Indicator */
+.VPSidebarItem .link.active {
+  color: var(--vp-c-brand-1) !important;
+  /* Neon Blue */
+  border-left: 2px solid var(--vp-c-brand-1) !important;
+  background: rgba(34, 79, 177, 0.1);
+  /* Subtle blue tint */
+  text-shadow: 0 0 10px rgba(34, 79, 177, 0.4);
+}
+
+/* Remove default active highlight block if present */
+.VPSidebarItem .link.active .text {
+  font-weight: 700 !important;
+}
+
+/* Sidebar Styling Updates */
+.VPSidebarGroup {
+  border-bottom: 1px solid var(--vp-border-color);
+  margin-bottom: 12px !important;
+  padding-bottom: 12px !important;
+}
+
+/* Content Panel: "Reading Mode" */
+/* Content Panel: "Reading Mode" */
+.VPContent {
+  background-color: var(--vp-c-bg);
+  border-left: 1px solid var(--vp-border-color);
+  position: relative;
+  /* Glass Archeology Background via Pseudo for Opacity */
+}
+
+.VPContent::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('/glass_archeology_bg.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  opacity: 0.05;
+  /* Fade out to 5% opacity for better readability */
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Ensure content sits above wallpaper */
+.VPContent>* {
+  position: relative;
+  z-index: 1;
+}
+
+.dark .VPContent {
+  background-color: var(--vp-c-bg);
+  /* Deep Void */
+}
+
+/* Global Shell Background */
+body {
+  background-color: var(--vp-c-bg);
+  font-family: var(--vp-font-family-base);
+  color: var(--vp-c-text-1);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Improve Detail Page Readability */
+.vp-doc p,
+.vp-doc ul,
+.vp-doc ol {
+  color: #E2E8F0;
+  /* Slate 200 - High Contrast */
+  line-height: 1.8;
+  font-size: 16px;
+  margin-bottom: 24px;
+}
+
+/* Dimming Effect for Neural Curator */
+body.fx-dimmed .HomeAnalytics,
+body.fx-dimmed .VPFooter,
+body.fx-dimmed .library-home .grid,
+body.fx-dimmed .library-home aside,
+body.fx-dimmed .home-layout> :not(.neural-curator) {
+  opacity: 0.2;
+  filter: blur(2px);
+  pointer-events: none;
+  transition: all 0.5s ease;
+}
+
+body.fx-curator-docked {
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+/* Unhide Appearance Toggle */
+.VPNavBarAppearance {
+  display: flex !important;
+  /* Enable Toggle */
+}
+
+/* Hide Default Footer */
+.VPFooter {
+  display: none !important;
+}
+
+.VPNavBarSocialLinks {
+  display: none !important;
+}
+
+/* Position Search to the far right */
+/* Handled by Absolute Positioning below */
+
+.VPNavBar .content-body {
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+}
+
+/* Global Shell Background */
+body {
+  background-color: #000000;
+  font-family: var(--vp-font-family-base);
+}
+
+/* Force Dark Backgrounds on Components to fix "White Background" issue */
+.VPFeature,
+.VPCard,
+.VPFeature.link {
+  background-color: var(--vp-c-bg-elv) !important;
+  /* using bg-elv */
+  border: 1px solid rgba(0, 243, 255, 0.1);
+}
+
+.VPFeature .title {
+  color: var(--vp-c-text-1) !important;
+}
+
+.VPFeature .details {
+  color: var(--vp-c-text-2) !important;
+}
+
+/* Headings */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--vp-font-family-headings);
+  letter-spacing: 0.02em;
+}
+
+h1 {
+  font-weight: 800;
+}
+
+/* Force Fluxive.ai Style (White -> Royal Blue) on Hero Name */
+.VPHero .name {
+  background: none !important;
+  -webkit-text-fill-color: initial !important;
+  color: #ffffff !important;
+  /* Force White as requested */
+  text-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+  /* Keep Blue Glow */
+}
+
+.VPHero .text {
+  background-image: linear-gradient(to bottom, #ffffff 40%, #3b82f6 100%) !important;
+  -webkit-background-clip: text !important;
+  background-clip: text !important;
+  -webkit-text-fill-color: transparent !important;
+  color: transparent !important;
+  text-shadow: 0 0 30px rgba(59, 130, 246, 0.4);
+  /* Blue Glow */
+}
+
+/* Push Content Down for Taller Header + Breadcrumb */
+/* Push Content Down for Header (64px) + Breadcrumb Row (48px) + Gap */
+.VPContent {
+  padding-top: 120px !important;
+}
+
+/* --- Robust Header Layout (Flex + Absolute Center) --- */
+
+/* 1. Main Container: Flex Row & Shift Fix */
+/* 1. Main Container: Flex Row & Shift Fix */
+.VPNavBar .container {
+  display: flex !important;
+  justify-content: space-between;
+  align-items: center;
+  /* Removed max-width constraint for Full Width 100% */
+  width: 100% !important;
+  height: var(--vp-nav-height);
+  pointer-events: none;
+  padding-left: 32px !important;
+  /* Increased padding */
+  padding-right: 32px !important;
+  /* Increased padding */
+  margin: 0 !important;
+  /* Remove auto margin */
+  position: relative;
+}
+
+/* Ensure sticky/fixed behavior handles the breadcrumb bar if needed */
+.VPNav {
+  position: fixed !important;
+  /* Ensure it stays put */
+}
+
+/* Adjust Content/Sidebar for Breadcrumb Bar (32px) */
+/* This pushes the main content down so it's not hidden by the fixed breadcrumb */
+.VPContent,
+.VPSidebar {
+  margin-top: 32px;
+}
+
+.VPNavBar .container>* {
+  pointer-events: auto;
+}
+
+/* 2. Left: Title/Logo Wrapper */
+.VPNavBar .title {
+  flex: 0 0 auto;
+  /* Don't grow/shrink */
+  display: flex !important;
+  align-items: center;
+  background: transparent !important;
+  /* Fix potential obscuring */
+}
+
+.VPNavBarTitle {
+  display: flex !important;
+  align-items: center;
+  border: none !important;
+  padding: 0 !important;
+  font-size: 32px !important;
+  /* Synced with HeaderConsole */
+  font-weight: 700 !important;
+  letter-spacing: -0.5px;
+}
+
+/* Style the text inside the title if possible (VitePress wraps text in span or similar) */
+.VPNavBarTitle .text {
+  font-family: var(--vp-font-family-headings);
+  background: linear-gradient(120deg, #ffffff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  filter: drop-shadow(0 0 10px rgba(34, 79, 177, 0.5));
+}
+
+/* 3. Right: Content Wrapper - HIDDEN for Console Redesign */
+.VPNavBar .content {
+  display: none !important;
+  /* Hide default menu in favor of HeaderConsole */
+}
+
+.VPNavBar .content-body {
+  display: none !important;
+}
+
+
+/* --- Search as Command Center --- */
+.VPNavBarSearch {
+  display: none !important;
+}
+
+.DocSearch-Button {
+  background: rgba(0, 0, 0, 0.4) !important;
+  border: 1px solid var(--vp-border-color) !important;
+  border-radius: 4px !important;
+  /* Tech boxy look */
+  padding: 0 16px !important;
+  height: 48px !important;
+  /* Taller */
+  width: 240px !important;
+  /* Wider */
+  justify-content: flex-start !important;
+  font-family: 'JetBrains Mono', monospace !important;
+  color: var(--vp-c-brand-1) !important;
+  /* Neon Green Prompt */
+}
+
+.DocSearch-Button-Placeholder {
+  color: var(--vp-c-text-2) !important;
+  font-size: 14px !important;
+  text-transform: uppercase;
+}
+
+.DocSearch-Search-Icon {
+  color: var(--vp-c-brand-1) !important;
+  width: 18px !important;
+  height: 18px !important;
+}
+
+/* --- Menu Links (Exo 2, Uppercase) --- */
+.VPNavBarMenuLink {
+  font-family: var(--vp-font-family-headings) !important;
+  font-weight: 600 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px;
+  font-size: 18px !important;
+  /* Synced with HeaderConsole */
+  color: var(--vp-c-text-1) !important;
+  transition: color 0.2s;
+}
+
+.VPNavBarMenuLink:hover,
+.VPNavBarMenuLink.active {
+  color: var(--vp-c-brand-1) !important;
+  /* Neon Green Hover */
+  background: transparent !important;
+}
+
+/* Hide Theme Toggle (Enforced Dark) */
+.VPNavBarAppearance {
+  display: none !important;
+}
+
+/* --- Mobile/Responsive Adjustments --- */
+@media (max-width: 960px) {
+  .VPNavBarSearch {
+    display: none !important;
+  }
+}
+
+
+/* --- Logo Updates for Exchange Style (Redesigned) --- */
+.custom-logo-link {
+  display: flex !important;
+  align-items: center;
+  height: 80px;
+  /* Accommodate larger logo */
+  margin-right: 20px;
+  cursor: pointer;
+  background: transparent;
+}
+
+/* Logo Wrapper Dimensions */
+.logo-wrapper {
+  position: relative;
+  width: 72px;
+  /* 1.5x of 48px */
+  height: 72px;
+  display: block;
+}
+
+/* Explicit Image Dimensions */
+.logo-basic,
+.logo-hover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 72px !important;
+  /* Match wrapper */
+  height: 72px !important;
+  object-fit: contain;
+  transition: all 0.3s ease;
+  display: block !important;
+
+  /* Neon Blue Filter based on #224FB1 (RGB 34/79/177) */
+  filter: brightness(0) saturate(100%) invert(19%) sepia(88%) saturate(2643%) hue-rotate(225deg) brightness(96%) contrast(96%);
+}
+
+/* Mobile/Responsive Adjustments */
+@media (max-width: 960px) {
+  .VPNavBarSearch {
+    display: none !important;
+    /* Hide search center on mobile if needed, or adjust */
+  }
+}
+
+
+
+
+
+
+/* Component: Holographic Terminal Code Blocks */
+.vp-code-group .tabs label {
+  font-family: var(--vp-font-family-headings);
+}
+
+div[class*='language-'] {
+  background-color: #0e0e10 !important;
+  border: 1px solid rgba(37, 99, 235, 0.2);
+  /* Updated border to match brand blue */
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+  border-radius: 8px;
+}
+
+/* Callouts */
+.custom-block.info {
+  background-color: rgba(37, 99, 235, 0.1);
+  /* Updated to match brand blue */
+  border-left: 4px solid var(--vp-c-brand-1);
+  color: #EEEEEE;
+}
+
+.custom-block.warning {
+  background-color: rgba(255, 191, 0, 0.1);
+  border-left: 4px solid #FFBF00;
+  color: #EEEEEE;
+}
+
+/* Buttons */
+.VPButton.brand {
+  background: linear-gradient(135deg, var(--vp-c-brand-3), var(--vp-c-brand-1));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  box-shadow: 0 0 10px rgba(76, 0, 255, 0.4);
+}
+
+
+/* --- Accessibility / HUD --- */
+.VPSkipLink {
+  display: none !important;
+}
+
+/* Override: Remove padding from Navbar Wrapper */
+.VPNavBar .wrapper {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+}
+
+/* Override: Condense Breadcrumb Bar */
+.VPLocalNav {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  height: 32px !important;
+  line-height: 32px !important;
+}
+
+.VPLocalNav .container {
+  height: 32px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  min-height: unset !important;
+}
+
+/* --- Auth Overlay --- */
+.auth-overlay {
+  position: fixed;
+  top: var(--vp-nav-height);
+  left: var(--vp-sidebar-width);
+  right: 0;
+  bottom: 0;
+  background: var(--vp-c-bg);
+  /* Opaque background to hide content */
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(10px);
+}
+
+@media (max-width: 960px) {
+  .auth-overlay {
+    left: 0;
+  }
+}
+
+/* --- IS-LANDING OVERRIDES (Removed to unify layout) --- */
+/* The layout requested (sidebar + header + content) is now global */
+/* --- IS-LANDING OVERRIDES --- */
+.is-landing .VPSidebar,
+.is-landing .VPNav,
+.is-landing .VPLocalNav,
+.is-landing .HomeAnalytics {
+  display: none !important;
+}
+
+.is-landing .VPContent {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
