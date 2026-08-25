@@ -1,24 +1,22 @@
 # Build stage
 FROM node:20-alpine as builder
-
 WORKDIR /app
-
 COPY package*.json ./
 RUN apk add --no-cache git build-base
 RUN npm install
-
 COPY . .
 RUN npm run build
 
 # Production stage
-FROM nginx:alpine
+FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --production
+COPY --from=builder /app/dist/library-app/browser ./dist
+COPY server.js perimeter-guard.js perimeter.html ./
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copy the compiled Angular site
-COPY --from=builder /app/dist/library-app/browser /usr/share/nginx/html
-
-# Expose port 8080 (standard for Cloud Run)
 EXPOSE 8080
+ENV PORT=8080
+ENV NODE_ENV=production
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["node", "server.js"]
