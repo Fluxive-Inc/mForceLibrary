@@ -120,3 +120,11 @@ mForce.sh
 _setup/
 _archive/
 # ══ end fleet standard ══
+
+# backups / editor artifacts — never deploy (only runtime contents ship)
+*.pre_*
+*.bak
+*.bak.*
+*.bak_*
+*.auditbak
+*.orig-bak
