@@ -13,7 +13,7 @@
     border: 1px solid rgba(0, 243, 255, 0.3);
     /* Neon Cyan */
     border-left: 4px solid #00f3ff;
-    border-radius: 8px;
+    border-radius:4px;
     padding: 16px;
     display: flex;
     align-items: center;
