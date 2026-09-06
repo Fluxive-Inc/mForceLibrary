@@ -60,3 +60,5 @@
         justify-content: space-between;
     }
 }
+/* ── Orbital Protocol · Solar (first pass) ── */
+:host-context(body.solar-mode) .data-tome{ background:rgba(15,23,42,.04); color:#0F172A; border-color:rgba(0,102,255,.28); }

@@ -212,3 +212,9 @@
     z-index: 100;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
+/* ── Orbital Protocol · Solar (first pass) — flips ground + inherited text; neon
+   accents preserved. Full light treatment of the neon panels is a follow-up. ── */
+:host-context(body.solar-mode) .perimeter-wrapper{ background-color:#F5F7FA; color:#0F172A; }
+:host-context(body.solar-mode) .perimeter-wrapper .glass,
+:host-context(body.solar-mode) .perimeter-wrapper [class*="panel"],
+:host-context(body.solar-mode) .perimeter-wrapper [class*="card"]{ background:rgba(255,255,255,.72); border-color:rgba(0,0,0,.08); }

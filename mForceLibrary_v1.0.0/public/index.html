@@ -347,5 +347,13 @@
             }
         });
     </script>
+  <script>
+  /* Orbital Protocol — mode owned by mForceLaunch; this app only listens. */
+  (function(){function ap(s){document.body.classList.toggle('solar-mode',!!s);}
+    window.addEventListener('MFORCE_THEME_CHANGE',function(e){ap(e&&e.detail&&e.detail.solar);});
+    window.addEventListener('mforce-theme-change',function(e){ap(e&&e.detail&&(e.detail.solar||e.detail.theme==='solar'));});
+    try{var p=localStorage.getItem('mforce-theme')||localStorage.getItem('mforce_theme');if(p==='solar')ap(true);}catch(_){}
+  })();
+  </script>
 </body>
 </html>

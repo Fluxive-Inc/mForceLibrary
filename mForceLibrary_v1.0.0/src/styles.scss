@@ -24,3 +24,6 @@ html {
 body.hide-global-launchpad>fluxive-launchpad {
     display: none !important;
 }
+/* ── Orbital Protocol · Solar override (canonical body.solar-mode) ── */
+body { transition: background-color .4s ease, color .4s ease; }
+body.solar-mode { background-color: #F5F7FA; color: #0F172A; }
