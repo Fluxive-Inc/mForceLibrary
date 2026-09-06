@@ -1,3 +1,4 @@
+@import "./command-deck.css";
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800;900&family=Outfit:wght@300;400;600;800&family=Share+Tech+Mono&display=swap');
 
 /* Global Resets */
@@ -27,3 +28,6 @@ body.hide-global-launchpad>fluxive-launchpad {
 /* ── Orbital Protocol · Solar override (canonical body.solar-mode) ── */
 body { transition: background-color .4s ease, color .4s ease; }
 body.solar-mode { background-color: #F5F7FA; color: #0F172A; }
+
+/* Command Deck adoption — shared tokens available fleet-wide; Library accent. */
+:root{--accent:#FF9900}
