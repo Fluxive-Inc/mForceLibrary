@@ -1,6 +1,6 @@
 .perimeter-wrapper {
-    background-color: #030308;
-    color: #fff;
+    background-color: var(--bg-deep);
+    color: var(--deck);
     font-family: 'Outfit', sans-serif;
     overflow: hidden;
     height: 100vh;
@@ -200,7 +200,7 @@
     left: 0;
     width: 100%;
     height: 30px;
-    background-color: #000;
+    background-color: var(--bg-deep);
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -214,7 +214,7 @@
 }
 /* ── Orbital Protocol · Solar (first pass) — flips ground + inherited text; neon
    accents preserved. Full light treatment of the neon panels is a follow-up. ── */
-:host-context(body.solar-mode) .perimeter-wrapper{ background-color:#F5F7FA; color:#0F172A; }
+:host-context(body.solar-mode) .perimeter-wrapper{ background-color:var(--bg); color:var(--ink); }
 :host-context(body.solar-mode) .perimeter-wrapper .glass,
 :host-context(body.solar-mode) .perimeter-wrapper [class*="panel"],
 :host-context(body.solar-mode) .perimeter-wrapper [class*="card"]{ background:rgba(255,255,255,.72); border-color:rgba(0,0,0,.08); }

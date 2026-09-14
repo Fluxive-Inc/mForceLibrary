@@ -1,7 +1,7 @@
 .library-viewport {
     height: 100vh;
     width: 100vw;
-    background: #02040a;
+    background: var(--bg);
     overflow: hidden;
     perspective: 800px;
     /* Restoring depth but softly */
@@ -110,7 +110,7 @@
             bottom: 0;
             width: 24px;
             margin-left: -12px;
-            background: #fff;
+            background: var(--deck);
             box-shadow: 0 0 60px 20px rgba(0, 243, 255, 0.8), 0 0 120px rgba(0, 100, 255, 0.6);
             opacity: 0.95;
         }
@@ -205,7 +205,7 @@
             left: 20px;
             font-family: 'Share Tech Mono', monospace;
             font-size: 0.7rem;
-            color: #fff;
+            color: var(--deck);
             opacity: 0.6;
             letter-spacing: 2px;
         }
@@ -280,7 +280,7 @@
 
     .cyber-title {
         width: 100%;
-        color: #fff;
+        color: var(--deck);
         font-family: 'Orbitron', sans-serif;
         text-shadow: 0 0 10px #00f3ff;
         margin-bottom: 20px;
@@ -300,7 +300,7 @@
     .btn-close {
         background: rgba(0, 102, 255, 0.3);
         border: 1px solid #00f3ff;
-        color: #fff;
+        color: var(--deck);
         padding: 8px 16px;
         font-family: 'Orbitron', sans-serif;
         cursor: pointer;
@@ -383,7 +383,7 @@
 
         h2 {
             font-family: 'Orbitron', sans-serif;
-            color: #fff;
+            color: var(--deck);
             text-shadow: 0 0 15px #00f3ff;
             margin: 0 0 15px 0;
             font-size: 1.8rem;
@@ -416,7 +416,7 @@
             &:hover {
                 background: rgba(0, 243, 255, 0.25);
                 box-shadow: 0 0 30px rgba(0, 243, 255, 0.6);
-                color: #fff;
+                color: var(--deck);
                 transform: translateY(-2px);
             }
 
@@ -427,4 +427,4 @@
     }
 }
 /* ── Orbital Protocol · Solar (first pass) ── */
-:host-context(body.solar-mode) .library-viewport{ background:#F5F7FA; color:#0F172A; }
+:host-context(body.solar-mode) .library-viewport{ background:var(--bg); color:var(--ink); }

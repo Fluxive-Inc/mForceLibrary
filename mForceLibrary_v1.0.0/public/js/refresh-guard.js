@@ -1,4 +1,7 @@
-// [Protocol] FluxOS_refresh-protocol.md
+// ⚠ VENDORED — DO NOT EDIT HERE.
+// Source of truth: .mforce/lib/refresh-guard/refresh-guard.js   ·   change it there, then run ./sync-modules.sh
+// Synced: 2026-09-14T01:57:18Z
+// [Protocol] fluXiveOS_refresh-protocol.md
 // Handles system update detection and notification.
 
 const RefreshGuard = {
@@ -12,18 +15,22 @@ const RefreshGuard = {
             if (!response.ok) throw new Error('RefreshGuard: version.json missing');
 
             const data = await response.json();
-            RefreshGuard.localVersion = data.version;
+            RefreshGuard.localVersion = data.build || data.version;  // key on moving build (K_REVISION)
             console.log('🛡️ RefreshGuard: Baseline Version', RefreshGuard.localVersion);
 
-            fetch('https://machineforce.fluxive.ai/api/ledger/reconcile', {
+            // STEP 3: Swarm Reconciliation check-in
+            fetch('/api/ledger/reconcile', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     version: RefreshGuard.localVersion,
                     clientUrl: window.location.origin,
-                    agentHash: 'library-verification' 
+                    agentHash: 'unsigned-or-cryptographic-proof'
                 })
-            }).catch(err => console.warn('Ledger check-in failed:', err));
+            })
+            .then(res => res.json())
+            .then(resData => console.log('🛡️ Swarm sync response:', resData))
+            .catch(err => console.warn('Ledger check-in failed:', err));
 
             // Start Polling every 60s
             setInterval(RefreshGuard.check, 60000);
@@ -37,13 +44,13 @@ const RefreshGuard = {
             const response = await fetch('./version.json?t=' + Date.now());
             const data = await response.json();
 
-            if (data.version && data.version !== RefreshGuard.localVersion) {
-                console.warn('🚨 RefreshGuard: Version Mismatch! New:', data.version, 'Old:', RefreshGuard.localVersion);
+            const remote = data.build || data.version;
+            if (remote && remote !== RefreshGuard.localVersion) {
+                console.warn('🚨 RefreshGuard: Version Mismatch! New:', remote, 'Old:', RefreshGuard.localVersion);
                 // Version Mismatch - Show Toast
                 const toast = document.getElementById('fx-refresh-toast');
                 if (toast) {
                     toast.classList.add('visible');
-                    // Optional: Play a subtle notification sound if defined
                 }
             }
         } catch (e) {

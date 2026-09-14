@@ -50,7 +50,7 @@
     font-size: 12px;
     font-weight: 700;
     letter-spacing: 0.1em;
-    color: #fff;
+    color: var(--deck);
     text-shadow: 0 0 5px rgba(0, 243, 255, 0.5);
 }
 
@@ -69,5 +69,5 @@
 }
 
 .fx-toast-action:hover {
-    color: #fff;
+    color: var(--deck);
 }

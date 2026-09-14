@@ -8,9 +8,9 @@ html {
     padding: 0;
     width: 100%;
     height: 100%;
-    background-color: #000;
+    background-color: var(--bg-deep);
     font-family: 'Outfit', sans-serif;
-    color: #fff;
+    color: var(--deck);
     overflow-x: hidden;
 }
 
@@ -27,7 +27,7 @@ body.hide-global-launchpad>fluxive-launchpad {
 }
 /* ── Orbital Protocol · Solar override (canonical body.solar-mode) ── */
 body { transition: background-color .4s ease, color .4s ease; }
-body.solar-mode { background-color: #F5F7FA; color: #0F172A; }
+body.solar-mode { background-color: var(--bg); color: var(--ink); }
 
 /* Command Deck adoption — shared tokens available fleet-wide; Library accent. */
 :root{--accent:#FF9900}
