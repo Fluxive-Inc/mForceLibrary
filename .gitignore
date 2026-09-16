@@ -141,3 +141,8 @@ _to_delete/
 **/_to_delete/
 *.pre_*
 *.pre_subsadmin
+
+# Angular build cache — local only, regenerated on every build (2026.09.16).
+# It appeared untracked after a local `npm test` run and `git add -A` in the bake
+# would have committed it.
+**/.angular/
