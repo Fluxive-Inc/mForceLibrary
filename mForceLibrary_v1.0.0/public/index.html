@@ -115,8 +115,8 @@
 
     /* VISION MARK */
     .vision-mark-container { position: absolute; top: 12px; right: 15px; pointer-events: none; z-index: 100; }
-    .vision-mark-text { font-family: 'Orbitron', sans-serif; font-weight: 800; letter-spacing: 0.1em; font-size: 14px; background: linear-gradient(180deg, #051A45 0%, var(--accent-hex) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5); filter: drop-shadow(0 0 10px rgba(var(--accent-rgb), 0.3)); }
-    .vision-mark-sup { background: linear-gradient(90deg, var(--accent-hex), #ffcc80); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-size: 0.6em; margin-left: 2px; }
+    .vision-mark-text { font-family: 'Orbitron', sans-serif; font-weight: 800; letter-spacing: 0.1em; font-size: 14px; background: linear-gradient(180deg, var(--accent-ground, #051A45) 0%, var(--accent-hex) 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; -webkit-text-stroke: 0.5px rgba(255, 255, 255, 0.5); filter: drop-shadow(0 0 10px rgba(var(--accent-rgb), 0.3)); }
+    .vision-mark-sup { background: linear-gradient(90deg, var(--accent-hex), var(--cd-warn-tint, #ffcc80)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; font-size: 0.6em; margin-left: 2px; }
 
     /* SOLAR TOGGLE */
     .solar-toggle-fab { position: relative; width: clamp(48px, 6vw, 62px); height: clamp(54px, 7vw, 68px); background: transparent; border: none; cursor: pointer; outline: none; transition: opacity 0.8s ease; }

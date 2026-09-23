@@ -32,12 +32,12 @@
 
 .fx-toast:hover {
     background: rgba(10, 20, 40, 0.95);
-    border-color: #00D4FF;
+    border-color: var(--live, #00D4FF);
     box-shadow: 0 0 10px rgba(0, 212, 255, 0.4);
 }
 
 .fx-toast-icon {
-    color: #00D4FF;
+    color: var(--live, #00D4FF);
     display: flex;
     align-items: center;
 }
