@@ -62,9 +62,19 @@ __pycache__/
 .env.local
 
 # Documentation / Non-Runtime Content
-*.md
-!mForceOS1.md
-!README.md
+# FLT-IGN-1 (2026.09.27): this block was a blanket `*.md` with two negations. It
+# ignored every markdown file in the repo except README.md and mForceOS1.md — so
+# the app's own mForceLibrary.md, mForceVision.md and projectConfig.md reported a
+# clean tree when edited and were silently lost on the next clone.
+# Commit 14ff150 ("Cleanup: apply tight gitignore and remove non-runtime files")
+# shows what the rule was actually aimed at: 69 bulk content-site markdown files,
+# every one of them under docs/ or legacy_content/docs/. Those trees have since
+# been moved under _archive/ (ignored on its own below), so the blanket pattern was
+# protecting nothing that another rule did not already cover.
+# Narrowed to the two original paths, anchored to the repo root so a nested docs/
+# directory inside the app is not caught. App-level markdown is tracked again.
+/docs/
+/legacy_content/
 
 # archived one-time/non-runtime files (local only)
 _archive/
@@ -146,3 +156,16 @@ _to_delete/
 # It appeared untracked after a local `npm test` run and `git add -A` in the bake
 # would have committed it.
 **/.angular/
+
+# ── gcloud config dir: spelling gap found 2026.09.27 alongside FLT-IGN-1 ──
+# The fleet-standard block above guards `.gcloud_config/` with an UNDERSCORE, but the
+# directory in this repo is `.gcloud-config/` with a HYPHEN, so the guard never
+# matched and 8 files under mForceLibrary_v1.0.0/.gcloud-config/ are already tracked,
+# including access_tokens.db and credentials.db. This line stops any further files
+# being added, but .gitignore does not untrack what is already in the index:
+# those two credential stores are still in the repo and in its history.
+# ACTION REQUIRED (needs a write command, deliberately not run here):
+#   git rm -r --cached mForceLibrary_v1.0.0/.gcloud-config
+# and treat the gcloud credentials as exposed — revoke/rotate them.
+.gcloud-config/
+**/.gcloud-config/
