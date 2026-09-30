@@ -169,3 +169,39 @@ _to_delete/
 # and treat the gcloud credentials as exposed — revoke/rotate them.
 .gcloud-config/
 **/.gcloud-config/
+
+# ── fluxive cleanup guard · managed, 2026.09.30 ──────────────────────────
+# Added after a fleet audit found 5 GB of build output, virtualenvs, logs and
+# editor backups on disk — 332 MB of it committed. These are the shapes that
+# kept coming back. A .gitignore does not untrack what is already tracked; it
+# stops the next copy arriving.
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+venv/
+*venv/
+.venv/
+site-packages/
+node_modules/
+build/
+dist/
+webapp-dist/
+desktop_package/
+canvaskit/
+flutter_assets/
+main.dart.js
+*.min.js
+*.bundle.js
+flutter_service_worker.js
+*.log
+.DS_Store
+Thumbs.db
+*.bak
+*.bak_*
+*.orig
+*.rej
+*.pre_*
+*.stale_*
+# ── end fluxive cleanup guard ───────────────────────────────────────────
