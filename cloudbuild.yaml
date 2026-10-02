@@ -283,6 +283,15 @@ steps:
       SEC="DB_PASSWORD=mforcelibrary-db-password:latest"
       gcloud secrets versions access latest --secret=mforcelibrary-perimeter-secret --project=${_PROJECT} >/dev/null 2>&1 \
         && SEC="$$SEC,PERIMETER_SECRET=mforcelibrary-perimeter-secret:latest"
+      # SEC-INGEST-2 — this app VENDORS mforce-security.js and had no key, so its
+      # emitter posted every event to the SIEM with an empty X-MForce-Auth, took a
+      # 401 and said nothing. 11 of the 18 emitter-carrying apps bound the key; these
+      # did not, which is why "17 systems wired to Security" meant no inputs and no
+      # complaint. Conditional and non-fatal, the shape every other pipeline uses: an
+      # unreadable secret prints a line and the deploy continues.
+      gcloud secrets versions access latest --secret=mforce-service-key --project=${_PROJECT} >/dev/null 2>&1 \
+        && SEC="$$SEC,MFORCE_API_KEY=mforce-service-key:latest" \
+        || echo "[${_APP}] Step 11 DEPLOY — NOT BOUND: MFORCE_API_KEY (secret mforce-service-key unreadable by the BUILD service account). The deploy CONTINUES; security telemetry stays DISABLED and the SIEM receives nothing from this service."
       SRC="--image ${_IMAGE}:$$TAG"
       EXISTS=$$(gcloud run services describe ${_SERVICE} --region ${_REGION} --project ${_PROJECT} >/dev/null 2>&1 && echo y || echo n)
       TRAFFIC=""; [ "$$EXISTS" = y ] && TRAFFIC="--no-traffic --tag canary"
