@@ -1,3 +1,36 @@
+// ── FLT-BUILD-1 boot breadcrumbs, 2026-10-04 ────────────────────────────────
+// This revision produced ZERO stdout and ZERO stderr across 21 instance starts,
+// with no "Container called exit(1)" and no startup-probe line, and Cloud Run
+// reported only "the user-provided container failed to start and listen on
+// PORT=8080" — a sentence that names no cause. Every hypothesis (missing module,
+// perimeter-guard exiting at module scope, a hang in db.js, memory) was checked
+// and none of them fits a container that says nothing AND never exits: both
+// secrets were bound, errlog-console calls the original console synchronously,
+// `new Pool()` in pg does not connect, and Bridge ships the same heavy deps on
+// the same default memory and is green.
+//
+// So the next build is made to answer the question instead of re-posing it.
+// These three lines cost nothing and split the remaining space in half: if the
+// next revision logs NOTHING AGAIN, then `node server.js` never executed and the
+// fault is the image or the platform, not this file. If it logs the first line
+// and stops, the failure is in a require below and the handler names it.
+//
+// fs.writeSync(2, ...) rather than console.error on purpose: stderr is a PIPE
+// under Cloud Run, where Node's writes are asynchronous and can be lost if the
+// process dies immediately after. A breadcrumb that can vanish is not a
+// breadcrumb.
+const _fsBoot = require('fs');
+const _crumb = (m) => { try { _fsBoot.writeSync(2, '[mForceLibrary] ' + m + '\n'); } catch (_) {} };
+_crumb('boot: node ' + process.version + ' pid ' + process.pid + ' NODE_ENV=' + (process.env.NODE_ENV || '(unset)') + ' PORT=' + (process.env.PORT || '(unset)'));
+process.on('uncaughtException', (e) => {
+    _crumb('FATAL uncaughtException at boot: ' + (e && e.stack ? e.stack : e));
+    process.exit(1);
+});
+process.on('unhandledRejection', (e) => {
+    _crumb('FATAL unhandledRejection at boot: ' + (e && e.stack ? e.stack : e));
+    process.exit(1);
+});
+
 try { require('./errlog-console'); } catch (_) {}   // C4: console.error/warn -> errlog
 require('dotenv').config();
 const express = require('express');
@@ -59,6 +92,7 @@ app.get('*', requireAuth, (req, res) => {
     res.sendFile(path.join(DIST_DIR, 'index.html'));
 });
 
+_crumb('requires complete; calling listen on ' + PORT);
 app.listen(PORT, async () => {
     try {
         await db.query(`
